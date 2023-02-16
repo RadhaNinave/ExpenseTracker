@@ -5,6 +5,7 @@ import './App.css';
 import SignUp from './Component/Auth/SignUp';
 import Welcome from './Component/UI/Welcome';
 import Navigation from './Component/Auth/Navigation';
+import ResetPassword from './Component/Auth/ResetPassword';
 
 function App() {
     
@@ -13,12 +14,15 @@ function App() {
     <div className="App">
       
       <Navigation />
+
       <Routes>
-        <Route path="/" element={<SignUp />} />
-        <Route path='/welcome' element={<Welcome/>}/>
+        <Route path="/login" element={<SignUp />} >
+        </Route>
+        <Route path='/' element={<Welcome/>}/>
         <Route path='/update' element={<UpdateProfile/>}/>
-      
+        <Route path = "/resetPassword" element ={<ResetPassword/>}/>
       </Routes>
+   
     </div>
   );
 }

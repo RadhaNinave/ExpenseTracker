@@ -40,7 +40,7 @@ const UpdateProfile=()=> {
 
   const onCancelhandler=(e)=>{
       e.preventDefault();
-      navigate('/welcome')
+      navigate('/')
 
 
   }
@@ -73,7 +73,7 @@ const UpdateProfile=()=> {
 
       if (res.ok) {
         alert("your Profile is update successfully");
-        navigate("/welcome");
+        navigate("/");
       } else {
         throw data.error;
       }

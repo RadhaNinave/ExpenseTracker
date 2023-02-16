@@ -1,31 +1,39 @@
-import { useContext } from "react";
+import { useContext ,Fragment} from "react";
 import { NavLink } from "react-bootstrap";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import AuthContext from "../store/AuthContext";
-
+import { Container,Navbar,Nav}from "react-bootstrap";
+import UpdateProfile from "../UI/UpdateProfile";
+import Welcome from "../UI/Welcome";
+import { Route,Routes } from "react-router-dom";
+import SignUp from "./SignUp";
 const Navigation = () =>{
     const authCtx=useContext(AuthContext);
     const navigate=useNavigate();
    const logoutHandler = ()=>{
         authCtx.logout();
-        navigate('/');
+        navigate('/login');
         alert("logout successfully");
     }
 
     return(
-        <div className='mainNav'>
-    <nav>
-
-        
-        <NavLink to="/home">Home</NavLink> 
-            <NavLink to="/expenses">Expenses</NavLink>
+    
+        <Fragment>
+      <Navbar bg="light" variant="light">
+        <Container>
+        <NavLink to="/">Home</NavLink>
+          <NavLink to="/expenses">Expenses</NavLink>
             <NavLink to="/about">About</NavLink>
-            <NavLink to="/profile">Profile</NavLink>
-              <NavLink to="/login">Login</NavLink>
-             <NavLink onClick={logoutHandler}>Logout</NavLink>
-        
-    </nav>
-    </div>
+            <NavLink to="/">Profile</NavLink>
+            <NavLink to="/login">Login</NavLink>
+           <NavLink onClick={logoutHandler}>Logout</NavLink>
+            </Container>
+      </Navbar>
+       
+    
+      
+  
+    </Fragment>
 
     )
 }

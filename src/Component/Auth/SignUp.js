@@ -120,8 +120,9 @@ const SignUp = () => {
           <button type="button" onClick={switchAuthModeHandler}>
             {isLogin ? "Create new account" : "Login with existing account"}
           </button>
+        
         </div>
-        <div className="text-center pt-3"></div>
+        <div className="text-center pt-3">  <Link to="/resetPassword">Forgot Password</Link></div>
       </Form>
     </Container>
   );
