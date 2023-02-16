@@ -6,12 +6,15 @@ import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { AuthContextProvider } from './Component/store/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <AuthContextProvider>
   <BrowserRouter>
     <App />
     </BrowserRouter>
+    </AuthContextProvider>
   
 );
 
