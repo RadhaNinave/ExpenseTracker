@@ -5,9 +5,37 @@ import { useEffect } from "react";
 import AuthContext from "../store/AuthContext";
 const UpdateProfile=()=> {
 
-  const authCtx=useContext(AuthContext);
+  useEffect(()=>{
+    async function fetchProfile()
+    {
+      try{
+        const res=  await fetch("https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAXiOYJr-9lsF_yoZxTgE3AByKyl3bGlqw",{
+          method:"POST",
+          body:JSON.stringify({
+            idToken : JSON.parse(localStorage.getItem("idToken")).idToken
+          }),
+          headers:{"Content-Type": "application/json",
+        }
+        });
+        const data=await res.json();
+        console.log(data.users[0].photoUrl);
+        console.log(data.users[0].displayName);
+        if(res.ok){
+          nameInputRef.current.value = data.users[0].displayName
+          photoInputRef.current.value = data.users[0].photoUrl
+      }
+    } 
+  catch(error){
+      console.log(error.message)
+    }
+  }
+
+  fetchProfile();
+      
+    
+  },[])
   const nameInputRef=useRef();
-  const urlInputRef=useRef();
+  const photoInputRef=useRef();
   const navigate=useNavigate();
 
   const onCancelhandler=(e)=>{
@@ -18,33 +46,40 @@ const UpdateProfile=()=> {
   }
 
   const updateHandler= async(e)=>{
-      e.preventDefault();
-      const nameInput=nameInputRef.current.value;
-      const urlInput=urlInputRef.current.value;
-
-     await fetch('https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAXiOYJr-9lsF_yoZxTgE3AByKyl3bGlqw', {
-          method: 'POST',
+     
+    e.preventDefault();
+    try {
+      const res = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyAXiOYJr-9lsF_yoZxTgE3AByKyl3bGlqw",
+        {
+          method: "POST",
           body: JSON.stringify({
-               idToken: authCtx.token,
-               displayName:nameInput,
-               photoUrl:urlInput,
-              returnSecureToken:true,
-              }),
+            idToken: JSON.parse(localStorage.getItem("idToken")).idToken,
+            displayName: nameInputRef.current.value,
+            photoUrl: photoInputRef.current.value,
+            returnSecureToken: true,
+          }),
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-      }).then((res)=>{
-          if(res.ok){
-              return res.json().then((responce)=>{
-                  console.log(responce)
-                  alert('Your Profile is Completed')
-                  navigate('/welcome',{replace:true})
-              })
-          }else{
-              console.log("idToken Not found")
-          }
-      })
-      console.log(nameInput+" "+urlInput)
+        }
+      );
+
+      const data = await res.json();
+      console.log(data);
+
+    nameInputRef.current.value = "";
+      photoInputRef.current.value = "";
+
+      if (res.ok) {
+        alert("your Profile is update successfully");
+        navigate("/welcome");
+      } else {
+        throw data.error;
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
 
   }
 
@@ -87,7 +122,7 @@ const UpdateProfile=()=> {
           <Form.Control
             id="photo"
             type="text"
-           ref={urlInputRef}
+           ref={photoInputRef}
             required
            
           />

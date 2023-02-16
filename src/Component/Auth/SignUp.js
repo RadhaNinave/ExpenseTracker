@@ -48,6 +48,7 @@ const SignUp = () => {
       .then((res) => {
         if (res.ok) {
          navigate('/welcome');
+        // localStorage.setItem('idToken' , JSON.stringify(data))
           return res.json();
         } else {
           return res.json().then((data) => {
@@ -62,8 +63,8 @@ const SignUp = () => {
       .then((data) => {
         console.log("SignUp success");
         localStorage.setItem('email' ,enteredEmail )
-        localStorage.setItem('token',authCtx.token)
-        authCtx.login(data.idToken);
+        localStorage.setItem('idToken',JSON.stringify(data))
+        //authCtx.login(data.idToken);
         
         navigate('/welcome');
         
