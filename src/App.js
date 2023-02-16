@@ -1,4 +1,4 @@
-
+import UpdateProfile from './Component/UI/UpdateProfile';
 import { Nav, NavLink } from 'react-bootstrap';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
@@ -10,12 +10,13 @@ function App() {
 
   return (
     <div className="App">
-      <NavLink to="/welcome"></NavLink>
-      <SignUp />
+      
+      
       <Routes>
-        <Route path='/welcome' element={<Welcome/>} exact>
-          
-        </Route>
+        <Route path="/" element={<SignUp />} />
+        <Route path='/welcome' element={<Welcome/>}/>
+        <Route path='/update' element={<UpdateProfile/>}/>
+      
       </Routes>
     </div>
   );

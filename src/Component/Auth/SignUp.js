@@ -6,21 +6,32 @@ const SignUp = () => {
     const authCtx=useContext(AuthContext);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+  const confirmPasswordRef=useRef();
   const [isLogin, setIsLogin] = useState(false);
 
   const navigate = useNavigate();
   const switchAuthModeHandler = () => {
     setIsLogin((prev) => !prev);
   };
+
   const submitHandler = (event) => {
     event.preventDefault();
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
+    console.log(enteredEmail);
+    console.log(enteredPassword);
+    if(!isLogin)
+    {
+       if(enteredPassword!==passwordInputRef.current.value);
+       {
+        alert("password must be same");
+       }
+    }
     let url = "";
     if (isLogin) {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAXiOYJr-9lsF_yoZxTgE3AByKyl3bGlqw";
-      navigate("/welcome");
+      
     } else {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAXiOYJr-9lsF_yoZxTgE3AByKyl3bGlqw";
@@ -36,6 +47,7 @@ const SignUp = () => {
     })
       .then((res) => {
         if (res.ok) {
+         navigate('/welcome');
           return res.json();
         } else {
           return res.json().then((data) => {
@@ -50,8 +62,11 @@ const SignUp = () => {
       .then((data) => {
         console.log("SignUp success");
         localStorage.setItem('email' ,enteredEmail )
+        localStorage.setItem('token',authCtx.token)
         authCtx.login(data.idToken);
-        navigate("/welcome");
+        
+        navigate('/welcome');
+        
       })
       .catch((err) => {
         alert(err.message);
@@ -87,16 +102,16 @@ const SignUp = () => {
           <Form.Group className="mb-3">
             <Form.Label htmlFor="password">Confirm Password</Form.Label>
             <Form.Control
-              id="password"
+              id="password2"
               type="password"
               placeholder="ConfirmPassword"
               required
-              ref={passwordInputRef}
+              ref={confirmPasswordRef}
             />
           </Form.Group>
         )}
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" >
           {isLogin ? "Log In" : "Sign Up"}
         </Button>
 
