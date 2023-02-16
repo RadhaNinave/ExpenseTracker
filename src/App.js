@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import SignUp from './Component/Auth/SignUp';
 import Welcome from './Component/UI/Welcome';
+import Navigation from './Component/Auth/Navigation';
 
 function App() {
     
@@ -11,7 +12,7 @@ function App() {
   return (
     <div className="App">
       
-      
+      <Navigation />
       <Routes>
         <Route path="/" element={<SignUp />} />
         <Route path='/welcome' element={<Welcome/>}/>
