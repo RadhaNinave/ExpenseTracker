@@ -10,11 +10,11 @@ import { AuthContextProvider } from './Component/store/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AuthContextProvider>
+  
   <BrowserRouter>
     <App />
     </BrowserRouter>
-    </AuthContextProvider>
+  
   
 );
 
